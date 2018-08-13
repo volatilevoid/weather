@@ -1,8 +1,14 @@
 <?php
 
 require_once 'app/Location.php';
+require_once 'app/FindLocation.php';
+require_once 'app/WeatherInfo.php';
+
 echo "<pre>";
-$departure = new Location("dvorovi");
+$name = 'Dvorovi';
+$lat = 44.8040;
+$lon = 19.2621;
+$locationDetails = array($name, $lat, $lon);
 
 ?>
 
@@ -23,5 +29,13 @@ $departure = new Location("dvorovi");
         Destination: <input type="text" name="destination"><br>
         <input type="submit">
     </form>
+    <div>
+        <?php
+        
+        $departure = new Location($locationDetails);
+        $weather = new WeatherInfo($departure);
+
+        ?>
+    </div>
 </body>
 </html>
