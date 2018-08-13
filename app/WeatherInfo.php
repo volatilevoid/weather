@@ -33,10 +33,13 @@ class WeatherInfo
             die( "Error retreving weather info" );
         curl_close($ch);
 
-        $data = simplexml_load_string(html_entity_decode($rawData), 'SimpleXMLElement', LIBXML_NOCDATA)
-                 or die( "can't turn in object" );
-       // $data = new SimpleXMLElement($rawData);
+        $data = simplexml_load_string(html_entity_decode($rawData), 'SimpleXMLElement', LIBXML_NOCDATA) or die( "can't turn in object" );
         echo "<pre>";
         var_dump($data);
+        return $data;
+    }
+    private function getCurrentWeather($latitude, $longitude) {
+        $allWeatherData = $this->getWeatherData($latitude, $longitude);
+        $currentTime;
     }
 }
