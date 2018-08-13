@@ -1,6 +1,8 @@
 <?php
 
-
+require_once 'app/Location.php';
+echo "<pre>";
+$departure = new Location("dvorovi");
 
 ?>
 
@@ -16,7 +18,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <form action="" >
+    <form action="" method="GET">
         Departure: <input type="text" name="departure" ><br>
         Destination: <input type="text" name="destination"><br>
         <input type="submit">
