@@ -34,7 +34,7 @@ class FindLocation
 
     // Find geolocation. Google places api
     private function findLocationCoordinates(string $locationName) {
-       // $apiKey = 'AIzaSyCxIE_PKGR8kJZ2jtMGx0J20Ug0WY3Kkfg';
+       // $apiKey = '';
         $input = rawurlencode($locationName);
         $inputType = 'textquery';
         $fields = 'geometry';

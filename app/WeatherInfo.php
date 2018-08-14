@@ -87,21 +87,21 @@ class WeatherInfo
         $this->highClouds = $allData['highClouds']['@attributes']["percent"];
     }
     public function getAllFields() {
-        echo $this->temperature;
+        echo "temperature ".$this->temperature;
         echo "<br>";
-        echo $this->dewPoint;
+        echo 'dewPoint: '.$this->dewPoint;
         echo "<br>";
-        echo $this->humidity;
+        echo 'humidity '.$this->humidity;
         echo "<br>";
-        echo $this->fog;
+        echo 'fog '.$this->fog;
         echo "<br>";
-        echo $this->cloudiness;
+        echo 'cloudiness '.$this->cloudiness;
         echo "<br>";
-        echo $this->lowClouds;
+        echo 'lowClouds '.$this->lowClouds;
         echo "<br>";
-        echo $this->mediumClouds;
+        echo 'mediumClouds '.$this->mediumClouds;
         echo "<br>";
-        echo $this->highClouds;
+        echo 'highClouds '.$this->highClouds;
         echo "<br>";
     }
 }
