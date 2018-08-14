@@ -4,7 +4,8 @@ class WeatherInfo
 {
     // dodati jedinice za velicine
     private $currentTime;
-    private $gpsCoordinates = array();  // [lat lon]    nepotrebno?
+    private $gpsCoordinates = array();  
+    private $locationName;
     private $dewPoint;
     private $humidity;
     private $temperature;
@@ -17,6 +18,7 @@ class WeatherInfo
     public function __construct(Location $locationDetails, $date) {
         $this->gpsCoordinates['latitude'] = $locationDetails->getLatitude();
         $this->gpsCoordinates['longitude'] = $locationDetails->getLongitude(); 
+        $this->locationName = $locationDetails->getName();
         $this->currentTime = $date;
         $this->setWeatherConditions();
     }
@@ -27,7 +29,7 @@ class WeatherInfo
         return $out;
     }
     // fetch all weather data for given location
-    private function getWeatherData() {
+    public function getWeatherData() {
         $apiUrl = "https://api.met.no/weatherapi/locationforecast/1.9/?lat={$this->gpsCoordinates['latitude']}&lon={$this->gpsCoordinates['longitude']}";
         
         $ch = curl_init();
@@ -44,6 +46,8 @@ class WeatherInfo
 
         $data = simplexml_load_string(html_entity_decode($rawData), 'SimpleXMLElement', LIBXML_NOCDATA) 
                     or die( "can't turn in object" );
+        //echo "<pre>";
+        //var_dump($data);
         return $this->xmlToArray($data);
     }
     // filter only current time data
@@ -54,6 +58,7 @@ class WeatherInfo
         $currentHours = substr($this->currentTime, 16, 2);
         $out = array();
         $temp = array();
+        $forecastClear = array();
 
         foreach($forecast as $index => $data) {
             foreach((array)$data as $atributes => $atrData) {  
@@ -62,6 +67,7 @@ class WeatherInfo
                         $currentHours == substr($atrData['to'], 11, 2) &&
                         $currentDay == substr($atrData['to'], 8, 2)) {
                         $temp = $atrData;
+                        //$forecastClear[] = $atrData;
                     }
                 }
             }
@@ -75,6 +81,7 @@ class WeatherInfo
 
         return $out;
     }
+
     public function setWeatherConditions() {
         $allData = $this->getCurrentWeather();
         $this->dewPoint = $allData['dewpointTemperature']['@attributes']['value'];
@@ -87,6 +94,11 @@ class WeatherInfo
         $this->highClouds = $allData['highClouds']['@attributes']["percent"];
     }
     public function getAllFields() {
+        echo "location ".$this->locationName;
+        echo "<br>";
+        echo "coordinates ";
+        print_r($this->gpsCoordinates);
+        echo "<br>";
         echo "temperature ".$this->temperature;
         echo "<br>";
         echo 'dewPoint: '.$this->dewPoint;

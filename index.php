@@ -1,28 +1,22 @@
 <?php
-
+/*
 require_once 'app/Location.php';
 require_once 'app/FindLocation.php';
 require_once 'app/WeatherInfo.php';
-// za potrebe frontenda
-$name = 'Dvorovi';
-$lat = 44.8040;
-$lon = 19.2621;
-$locationDetails = array($name, $lat, $lon);
-$dewPoint;
-$humidity;
-$temperature;
-$fog;
-$cloudiness;
-$lowClouds;
-$mediumClouds;
-$highClouds;
 
+$departure = array();
 if(!empty($_GET)) {
-    //$departure = $_GET['departure'];
+    $departure = explode(' ', $_GET['departure']);
     //$destination = $_GET['destination'];
     $time = $_GET['timestamp'];
 }
-var_dump($_GET);
+$name = 'Dvorovi';
+//$lat = 44.8040;
+//$lon = 19.2621;
+$locationDetails = array($name, $departure[0], $departure[1]);
+
+
+var_dump($departure);*/
 ?>
 
 
@@ -36,25 +30,83 @@ var_dump($_GET);
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
-    <div id="form">
+<div class="">
+    <table>
+        <tr>
+            <td colspan="2"><div id="form">
         <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-            Departure: <input id="departure" type="text" name="departure">
-            Destination: <input id="destination" type="text" name="destination"><br>
+            <input id="departure" type="text" name="departure" value="44.8040 19.2621">
+            <input id="destination" type="text" name="destination"><br>
             <input type="hidden" id="timestamp" name="timestamp" value="">
             <input type="submit" value="submit">
         </form>
-    </div>
+    </div></td>
+        </tr>
+        <tr>
+            <td>High clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+            <td>High clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Medium clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+            <td>Medium clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Low clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+            <td>Low clouds:
+            <div class="sky">
+                <div class="elipse with-circle with-bump"></div>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td>fog1</td>
+            <td>fog2</td>
+        </tr>
+        <tr>
+            <td>otherData1</td>
+            <td>otherData2</td>
+        </tr>
+    </table>
+ <!--   <div id="form">
+        <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+            Departure: <input id="departure" type="text" name="departure" value="44.8040 19.2621">
+            <!--Destination: <input id="destination" type="text" name="destination"><br>
+            <input type="hidden" id="timestamp" name="timestamp" value="">
+            <input type="submit" value="submit">
+        </form>
+    </div>-->
         <div>
-        <?php
-        echo "<pre>";
+            <?php
+        /*echo "<pre>";
         $location = new Location($locationDetails);
         $weather = new WeatherInfo($location, $time);
-        //$x = $weather->getCurrentWeather();
-        //$weather->setWeatherConditions();
-        //var_dump($x);
         $weather->getAllFields();
+        //$allData = $weather->getCurrentWeather();
+        //var_dump($allData);
+        */
         ?>
     </div>
+</div>
     <script src="js/main.js"></script>
 </body>
 </html>
