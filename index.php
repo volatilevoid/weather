@@ -16,6 +16,13 @@ $cloudiness;
 $lowClouds;
 $mediumClouds;
 $highClouds;
+
+
+//$departure = $_GET['departure'];
+//$destination = $_GET['destination'];
+$time = $_GET['timestamp'];
+
+var_dump($_GET);
 ?>
 
 
@@ -29,19 +36,38 @@ $highClouds;
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
-    <div id="formContainter">
-        <form id="locationData" action="" method="GET">
-            Departure: <input type="text" name="departure">
-            Destination: <input type="text" name="destination"><br>
-            <button>Get Weather</button>
+    <div id="form">
+        <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+            Departure: <input id="departure" type="text" name="departure">
+            Destination: <input id="destination" type="text" name="destination"><br>
+            <input type="hidden" id="timestamp" name="timestamp" value="">
+            <input type="submit" value="submit">
         </form>
     </div>
         <div>
-            <?php
+        <?php
         
-        $departure = new Location($locationDetails);
-        $weather = new WeatherInfo($departure);
-        
+        $location = new Location($locationDetails);
+        $weather = new WeatherInfo($location, $time);
+        $x = $weather->getCurrentWeather();
+        //var_dump($x['product']['time']);
+
+/*
+        foreach($y as $key => $val) {
+            echo "<br>*****************key**************************<br>";
+            print_r($key);
+            echo "<br>*****************val**************************<br>";
+            print_r($val);
+            echo "<br>**********************************************<br>";            
+            foreach($val as $key2 => $val2) {
+                echo "<br>****************key2**************************<br>";
+                print_r($key2);
+                echo "<br>****************val2**************************<br>";
+                print_r($val2);
+                echo "<br>**********************************************<br>";
+            }
+        }*/
+
         ?>
     </div>
     <script src="js/main.js"></script>

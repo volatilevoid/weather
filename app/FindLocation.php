@@ -3,9 +3,9 @@
 class FindLocation
 {
     private $candidates = array();
-            private $name;
-            private $latitude;
-            private $longitude;
+    private $name;
+    private $latitude;
+    private $longitude;
 
     public function __construct(string $inputString) {
         if( $this->isGpsFormat($inputString) ) {
@@ -26,14 +26,15 @@ class FindLocation
     private function isGpsFormat(string $inputString) {
         // First - latitude, second - longitude
         $input = explode(" ", $inputString);
-        if( count($input) === 2 && abs(floatval($input[0])) <= 90 && abs(floatval($input[1])) <= 180 )
+        // *100 tacnost do druge decimale
+        if( count($input) === 2 && abs(floatval($input[0])*100) <= 9000 && abs(floatval($input[1]) * 100) <= 18000 )
             return true;
         return false;
     }
 
     // Find geolocation. Google places api
     private function findLocationCoordinates(string $locationName) {
-        $apiKey = 'AIzaSyCxIE_PKGR8kJZ2jtMGx0J20Ug0WY3Kkfg';
+       // $apiKey = 'AIzaSyCxIE_PKGR8kJZ2jtMGx0J20Ug0WY3Kkfg';
         $input = rawurlencode($locationName);
         $inputType = 'textquery';
         $fields = 'geometry';
@@ -45,7 +46,6 @@ class FindLocation
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         $rawData = curl_exec($ch);
         curl_close($ch);
-        var_dump($rawData);
     }
 
     // Find name of geolocation
