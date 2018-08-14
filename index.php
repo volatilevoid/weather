@@ -17,11 +17,11 @@ $lowClouds;
 $mediumClouds;
 $highClouds;
 
-
-//$departure = $_GET['departure'];
-//$destination = $_GET['destination'];
-$time = $_GET['timestamp'];
-
+if(!empty($_GET)) {
+    //$departure = $_GET['departure'];
+    //$destination = $_GET['destination'];
+    $time = $_GET['timestamp'];
+}
 var_dump($_GET);
 ?>
 
@@ -46,28 +46,13 @@ var_dump($_GET);
     </div>
         <div>
         <?php
-        
+        echo "<pre>";
         $location = new Location($locationDetails);
         $weather = new WeatherInfo($location, $time);
-        $x = $weather->getCurrentWeather();
-        //var_dump($x['product']['time']);
-
-/*
-        foreach($y as $key => $val) {
-            echo "<br>*****************key**************************<br>";
-            print_r($key);
-            echo "<br>*****************val**************************<br>";
-            print_r($val);
-            echo "<br>**********************************************<br>";            
-            foreach($val as $key2 => $val2) {
-                echo "<br>****************key2**************************<br>";
-                print_r($key2);
-                echo "<br>****************val2**************************<br>";
-                print_r($val2);
-                echo "<br>**********************************************<br>";
-            }
-        }*/
-
+        //$x = $weather->getCurrentWeather();
+        //$weather->setWeatherConditions();
+        //var_dump($x);
+        $weather->getAllFields();
         ?>
     </div>
     <script src="js/main.js"></script>
