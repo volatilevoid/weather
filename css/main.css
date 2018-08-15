@@ -1,53 +1,91 @@
+:root {
+    --sky-day: rgb(135, 206, 235);
+    --sky-night: rgb(46,68,130);
+    --no-sun-night: rgb(46,68,130);
+    --sun-day: yellow;
+    --no-sun-day: skyblue;
+    --cloud-heavy: white;
+    --cloud-light: rgb(187, 222, 236);
+    --cloud-noclouds: rgba(135, 206, 235, 0);
+    --cloud-heavy-night: rgb(35, 52, 99);;
+    --cloud-light-night: rgb(57, 76, 131);;
+    --cloud-noclouds-night: rgb(46,68,130);
+}
+
+body {
+    color: #fc4445
+}
+
 input[type=text] {
-    padding: 12px 20px;
+    padding: 6px 10px;
 }
 td {
-    background-color: lightblue;
+    background-color:var(--sky-color);
+}
+locationData {
+    margin: auto;
 }
 
 .sky {
-    background-color: skyblue;
-    width: 200px;
+    background-color: var(--sky-color);
+    width: 150px;
+    height: 65px;
+    margin: auto;
 }
-
+/*Cloud*/
 .elipse {
-    width: 110px; 
-    height: 40px; 
+    width: 70px; 
+    height: 30px; 
     position: relative;
     display: inline-block;
-    -moz-border-radius: 100px / 50px; 
-    -webkit-border-radius: 100px / 50px; 
-    border-radius: 100px / 50px;
+    -moz-border-radius: 70px / 35px; 
+    -webkit-border-radius: 70px / 35px; 
+    border-radius: 70px / 35px;
     margin-top: 25px;
     margin-bottom: 15px;
     margin-left: 20px;
-    background: white;
+    background: var(--cloud-color);
  }
  
  .with-circle:before {
    content: '';
    position: absolute;
-   top: -15px;
+   top: -8px;
    left: 0;
    right: 0;
-   height: 20px;
-   width: 40px;
+   height: 30px;
+   width: 30px;
    margin-left: auto;
    margin-right: auto;
-   background: white;
-   border-radius: 50px 50px 0 0;
+   background: var(--cloud-color);;
+   border-radius: 25px 25px 0 0;
  }
  .with-bump:after {
     content: '';
     position: absolute;
     left: 0;
-    top: 3px;
+    top: 7px;
     right: -30px;
-    bottom: 3px;
-    height: 40px;
-    width: 40px;
+    bottom: 7px;
+    height: 25px;
+    width: 25px;
     margin-left: auto;
     margin-right: auto;
-    background: white;
-    border-radius: 0 0 50px 50px;
+    background: var(--cloud-color);;
+    border-radius: 0 0 25px 25px;
  }
+
+.sun {
+    width: 45px; 
+    height: 45px; 
+    float: left;
+    position: relative;
+    left: 90px;
+    right: 90px;
+    top: 0px;
+    bottom: 0px;
+    background: var(--sun-color); 
+    -moz-border-radius: 30px; 
+    -webkit-border-radius: 30px; 
+    border-radius: 30px;
+}

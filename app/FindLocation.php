@@ -47,7 +47,7 @@ class FindLocation
         $rawData = curl_exec($ch);
         curl_close($ch);
     }
-
+    
     // Find name of geolocation
     private function findLocationName(array $gpsCoordinates) {}
 }

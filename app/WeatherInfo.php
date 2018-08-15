@@ -22,13 +22,17 @@ class WeatherInfo
         $this->currentTime = $date;
         $this->setWeatherConditions();
     }
-
+    /**
+     * Convert objects from xml to arrays
+     */
     private function xmlToArray($xmlObject, $out = array()) {
         foreach((array)$xmlObject as $index => $node)
             $out[$index] = (is_object($node)) ? $this->xmlToArray($node) : $node;
         return $out;
     }
-    // fetch all weather data for given location
+    /**
+     *  Api request for weather conditions
+     */
     public function getWeatherData() {
         $apiUrl = "https://api.met.no/weatherapi/locationforecast/1.9/?lat={$this->gpsCoordinates['latitude']}&lon={$this->gpsCoordinates['longitude']}";
         
@@ -46,11 +50,12 @@ class WeatherInfo
 
         $data = simplexml_load_string(html_entity_decode($rawData), 'SimpleXMLElement', LIBXML_NOCDATA) 
                     or die( "can't turn in object" );
-        //echo "<pre>";
-        //var_dump($data);
         return $this->xmlToArray($data);
     }
-    // filter only current time data
+
+    /**
+     * Filter only current time data
+     */
     public function getCurrentWeather() {
         $allWeatherData = $this->getWeatherData();
         $forecast = (array)($allWeatherData['product']);
@@ -61,7 +66,7 @@ class WeatherInfo
         $forecastClear = array();
 
         foreach($forecast as $index => $data) {
-            foreach((array)$data as $atributes => $atrData) {  
+            foreach((is_object($data) ? (array)$data : $data) as $atributes => $atrData) {  
                 if(!empty($atrData['from'])) {
                     if(strcmp($atrData['from'], $atrData['to']) == 0 && 
                         $currentHours == substr($atrData['to'], 11, 2) &&
@@ -74,8 +79,8 @@ class WeatherInfo
         }        
 
         foreach($temp as $key =>$val) {
-            foreach((array)$val as $atrName => $atrValues) {
-                $out[$atrName] = (array)$atrValues;
+            foreach((is_object($val) ? (array)$val : $val) as $atrName => $atrValues) {
+                $out[$atrName] = (is_object($atrValues) ? (array)$atrValues : $atrValues);
             }
         }
 
@@ -84,36 +89,52 @@ class WeatherInfo
 
     public function setWeatherConditions() {
         $allData = $this->getCurrentWeather();
-        $this->dewPoint = $allData['dewpointTemperature']['@attributes']['value'];
-        $this->humidity = $allData['humidity']['@attributes']['value'];
-        $this->temperature = $allData['temperature']['@attributes']['value'];
-        $this->fog = $allData['fog']['@attributes']['percent'];
-        $this->cloudiness = $allData['cloudiness']['@attributes']['percent'];
-        $this->lowClouds = $allData['lowClouds']['@attributes']["percent"];
-        $this->mediumClouds = $allData['mediumClouds']['@attributes']["percent"];
-        $this->highClouds = $allData['highClouds']['@attributes']["percent"];
+        if(!empty($allData)) {
+            //echo "<pre>";
+            //var_dump($allData);
+            //echo "<br>**************************************************************<br>";
+            $this->dewPoint = $allData['dewpointTemperature']['@attributes']['value'];
+            $this->humidity = $allData['humidity']['@attributes']['value'];
+            $this->temperature = $allData['temperature']['@attributes']['value'];
+            $this->fog = $allData['fog']['@attributes']['percent'];
+            $this->cloudiness = $allData['cloudiness']['@attributes']['percent'];
+            $this->lowClouds = $allData['lowClouds']['@attributes']["percent"];
+            $this->mediumClouds = $allData['mediumClouds']['@attributes']["percent"];
+            $this->highClouds = $allData['highClouds']['@attributes']["percent"];
+        }
     }
-    public function getAllFields() {
-        echo "location ".$this->locationName;
-        echo "<br>";
-        echo "coordinates ";
-        print_r($this->gpsCoordinates);
-        echo "<br>";
-        echo "temperature ".$this->temperature;
-        echo "<br>";
-        echo 'dewPoint: '.$this->dewPoint;
-        echo "<br>";
-        echo 'humidity '.$this->humidity;
-        echo "<br>";
-        echo 'fog '.$this->fog;
-        echo "<br>";
-        echo 'cloudiness '.$this->cloudiness;
-        echo "<br>";
-        echo 'lowClouds '.$this->lowClouds;
-        echo "<br>";
-        echo 'mediumClouds '.$this->mediumClouds;
-        echo "<br>";
-        echo 'highClouds '.$this->highClouds;
-        echo "<br>";
+
+    public function getName() {
+        return $this->locationName;
+    }
+    public function getCoordinates() {
+        return $this->gpsCoordinates;
+    }
+    public function getTemperature() {
+        return $this->temperature;
+    }
+    public function getDewPoint() {
+        return $this->dewPoint;
+    }
+    public function getHumidity() {
+        return $this->humidity;
+    }
+    public function getFog() {
+        return $this->fog;
+    }
+    public function getCloudiness() {
+        return $this->cloudiness;
+    }
+    public function getLowClouds() {
+        return $this->lowClouds;
+    }
+    public function getMediumClouds() {
+        return $this->mediumClouds;
+    }
+    public function getHighClouds() {
+        return $this->highClouds;
+    }
+    public function getCurrentTime() {
+        return $this->currentTime;
     }
 }
