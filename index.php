@@ -27,8 +27,6 @@ if(!empty($_GET)) {
     $allData = $destinationWeather->getCurrentWeather();
 
     echo "<pre>";
-    var_dump(getCloudColor(60, 21));
-    var_dump(substr($departureTime, 16, 2));
 }
 ?>
 
@@ -40,7 +38,12 @@ if(!empty($_GET)) {
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('timestamp').setAttribute('value', new Date());
+            console.log('fawsdf');
+        }, false);
+    </script>
 </head>
 <body>
 <div class="container">
@@ -59,12 +62,12 @@ if(!empty($_GET)) {
         <tr>
             <td>High clouds: <?php echo $departureWeather->getHighClouds(); ?>
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
-<div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getHighClouds(), $departureTime); ?>)"></div>
+            <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
             <td>High clouds: <?php echo $destinationWeather->getHighClouds(); ?>
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
-                <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getHighClouds(), $departureTime); ?>)"></div>
+            <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>

@@ -5,7 +5,7 @@ class Location
     private $name;
     private $latitude;
     private $longitude;
-    // 
+    
     public function __construct(array $locationDetails) {
         $this->name = $locationDetails[0];
         $this->latitude = $locationDetails[1];
