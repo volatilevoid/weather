@@ -36,8 +36,8 @@ if(!empty($_GET)) {
         <tr>
             <td colspan="2"><div id="form">
         <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-            <input id="departure" type="text" name="departure" value="<?php if(!empty($_GET)) echo $_GET['departure']; ?>">
-            <input id="destination" type="text" name="destination" value="<?php if(!empty($_GET)) echo $_GET['destination']; ?>"><br>
+            <input id="departure" type="text" placeholder="Departure" name="departure" value="<?php if(!empty($_GET)) echo $_GET['departure']; ?>">
+            <input id="destination" type="text" placeholder="Destination" name="destination" value="<?php if(!empty($_GET)) echo $_GET['destination']; ?>"><br>
             <input type="hidden" id="timestamp" name="timestamp" value="">
             <input id="button" type="submit" value="submit">
         </form>
