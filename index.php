@@ -32,7 +32,7 @@ if(!empty($_GET)) {
 </head>
 <body>
 <div class="container">        
-    <table style="--sky-color:var(<?php if(!empty($_GET)) echo getSkyColor($departureTime, $departureWeather); ?>)">
+    <table style="--sky-color:var(<?php if(!empty($_GET)) echo getSkyColor($departureTime); ?>)">
         <tr>
             <td colspan="2"><div id="form">
         <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
@@ -46,49 +46,49 @@ if(!empty($_GET)) {
         <?php if(!empty($_GET)): ?>
         <tr>
             <td>High clouds: <?php echo $departureWeather->getHighClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
             <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
             <td>High clouds: <?php echo $destinationWeather->getHighClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
             <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
             <td>Medium clouds: <?php echo $departureWeather->getMediumClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getMediumClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
             <td>Medium clouds: <?php echo $destinationWeather->getMediumClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getMediumClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
             <td>Low clouds: <?php echo $departureWeather->getLowClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather)?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime)?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getLowClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
             <td>Low clouds: <?php echo $destinationWeather->getLowClouds(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getLowClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
             <td>Fog: <?php echo $departureWeather->getFog(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
                 <div class="sun" style="--sun-color: var(<?php echo getSunColor($departureTime, $departureWeather); ?>)"></div>
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getCloudiness(), $departureTime); ?>)"></div>
             </div>
             </td>
             <td>Fog:<?php echo $destinationWeather->getFog(); ?>&percnt;
-            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
+            <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime); ?>)">
                 <div class="sun" style="--sun-color: var(<?php echo getSunColor($departureTime, $destinationWeather); ?>)"></div>
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getCloudiness(), $departureTime); ?>)"></div>
             </div>

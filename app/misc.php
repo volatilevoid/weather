@@ -26,7 +26,7 @@
 /**
  * Changing sky color
  */
-function getSkyColor($timeStamp, WeatherInfo $weather) {
+function getSkyColor($timeStamp) {
     $hours = substr($timeStamp, 16, 2);
     if (intval($hours) < 7 || intval($hours) > 19)  
         return '--sky-night';
