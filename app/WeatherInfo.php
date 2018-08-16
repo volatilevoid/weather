@@ -41,6 +41,7 @@ class WeatherInfo
         curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
         $rawData = curl_exec($ch);
+
         if( $rawData === false )
             die( "Error retreving weather info" );
         curl_close($ch);

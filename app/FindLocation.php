@@ -23,7 +23,7 @@ class FindLocation
         // First - latitude, second - longitude
         $input = explode(" ", $inputString);
 
-        if( count($input) === 2 && abs(floatval($input[0])*100) <= 9000 && abs(floatval($input[1]) * 100) <= 18000 )
+        if( count($input) === 2 && ctype_digit($input[0]) && ctype_digit($input[0]) && abs(floatval($input[0])) <= 90 && abs(floatval($input[1])) <= 180 )
             return true;
         return false;
     }
@@ -36,7 +36,7 @@ class FindLocation
     private function findLocation(string $locationName) {
         $locationsClean = array();
         $BingMapsKey = 'AmMWG2GT57hxAy8jQhqObLEklhqUgF5kI4WQx3F7Hp93CYELYAoPcXIsz-sL45b4';
-        $locationQuery = rawurlencode($locationName);
+        $locationQuery = urlencode(str_replace(' ', '', $locationName));
         $maxResults = 10;
         $includeNeighborhood = 1;
 
@@ -46,6 +46,9 @@ class FindLocation
         curl_setopt($ch, CURLOPT_URL, $apiCallUrl);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         $rawData = curl_exec($ch);
+
+        if ($rawData == false)
+            die('Error finding location');
         curl_close($ch);
         $candidateLocations = json_decode($rawData, true)['resourceSets'][0]['resources'];
 
