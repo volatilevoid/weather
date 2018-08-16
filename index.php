@@ -26,7 +26,6 @@ if(!empty($_GET)) {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('timestamp').setAttribute('value', new Date());
-            console.log('fawsdf');
         }, false);
     </script>
 </head>

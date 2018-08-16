@@ -1,7 +1,5 @@
 <?php
-/**
- * Due to Google Places API limitation, 
- */
+
 class FindLocation
 {
     private $latitude;
@@ -18,9 +16,9 @@ class FindLocation
         }
     }
 
-    // Check if input is a geolocation
+    // Check input
     private function isGpsFormat(string $inputString) {
-        // First - latitude, second - longitude
+        // $input[0] - latitude, $input[1] - longitude
         $input = explode(" ", $inputString);
 
         if( count($input) === 2 && ctype_digit($input[0]) && ctype_digit($input[0]) && abs(floatval($input[0])) <= 90 && abs(floatval($input[1])) <= 180 )
@@ -31,13 +29,12 @@ class FindLocation
 
     /**
      * API request for location coordinates
-     * Returns array of location candidates
      */
     private function findLocation(string $locationName) {
         $locationsClean = array();
         $BingMapsKey = 'AmMWG2GT57hxAy8jQhqObLEklhqUgF5kI4WQx3F7Hp93CYELYAoPcXIsz-sL45b4';
         $locationQuery = urlencode(str_replace(' ', '', $locationName));
-        $maxResults = 10;
+        $maxResults = 1;
         $includeNeighborhood = 1;
 
         $apiCallUrl = "http://dev.virtualearth.net/REST/v1/Locations?query={$locationQuery}&includeNeighborhood={$includeNeighborhood}&maxResults={$maxResults}&key={$BingMapsKey}";

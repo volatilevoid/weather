@@ -21,9 +21,11 @@ body {
 input[type=text] {
     padding: 6px 10px;
 }
+
 td {
     background-color:var(--sky-color);
 }
+
 locationData {
     margin: auto;
 }
@@ -34,6 +36,7 @@ locationData {
     height: 65px;
     margin: auto;
 }
+
 /*Cloud*/
 .elipse {
     width: 70px; 
@@ -48,7 +51,6 @@ locationData {
     margin-left: 20px;
     background: var(--cloud-color);
  }
- 
  .with-circle:before {
    content: '';
    position: absolute;
