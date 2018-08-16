@@ -51,6 +51,10 @@ class FindLocation
 
         $this->latitude = $candidateLocations[0]['bbox'][0];
         $this->longitude = $candidateLocations[0]['bbox'][1];
+        //echo "<pre>";
+    //    var_dump($this->latitude);
+        //var_dump($this->longitude);
+
     }
 
     public function getLatitude() {
