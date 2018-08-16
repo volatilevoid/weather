@@ -52,5 +52,3 @@ function getSunColor($timeStamp, WeatherInfo $weather) {
             return '--sun-day';
     }
 }
-
-?>

@@ -30,7 +30,7 @@ class WeatherInfo
     /**
      *  Api request for weather conditions
      */
-    public function getWeatherData() {
+    private function getWeatherData() {
         $apiUrl = "https://api.met.no/weatherapi/locationforecast/1.9/?lat={$this->gpsCoordinates['latitude']}&lon={$this->gpsCoordinates['longitude']}";
         
         $ch = curl_init();
@@ -53,7 +53,7 @@ class WeatherInfo
     /**
      * Get data only for current time
      */
-    public function getCurrentWeather() {
+    private function getCurrentWeather() {
         $allWeatherData = $this->getWeatherData();
         $forecast = (array)($allWeatherData['product']);
         $currentDay = substr($this->currentTime, 8, 2);
@@ -86,7 +86,7 @@ class WeatherInfo
     /**
      * Set class properities
      */
-    public function setWeatherConditions() {
+    private function setWeatherConditions() {
         $allData = $this->getCurrentWeather();
         if(!empty($allData)) {
             $this->dewPoint = $allData['dewpointTemperature']['@attributes']['value'];

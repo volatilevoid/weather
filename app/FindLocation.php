@@ -33,7 +33,7 @@ class FindLocation
      * API request for location coordinates
      * Returns array of location candidates
      */
-    public function findLocation(string $locationName) {
+    private function findLocation(string $locationName) {
         $locationsClean = array();
         $BingMapsKey = 'AmMWG2GT57hxAy8jQhqObLEklhqUgF5kI4WQx3F7Hp93CYELYAoPcXIsz-sL45b4';
         $locationQuery = rawurlencode($locationName);
@@ -51,10 +51,6 @@ class FindLocation
 
         $this->latitude = $candidateLocations[0]['bbox'][0];
         $this->longitude = $candidateLocations[0]['bbox'][1];
-        //echo "<pre>";
-    //    var_dump($this->latitude);
-        //var_dump($this->longitude);
-
     }
 
     public function getLatitude() {
