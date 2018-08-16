@@ -1,9 +1,9 @@
 <?php
-
+/**
+ * Due to Google Places API limitation, 
+ */
 class FindLocation
 {
-    private $candidates = array();
-    private $name;
     private $latitude;
     private $longitude;
 
@@ -12,13 +12,9 @@ class FindLocation
             $input = explode(" ", $inputString);
             $this->latitude = $input[0];
             $this->longitude = $input[1];
-            $this->name = $this->findLocationName($input);
         }
         else {
-            $gpsCoordinates = $this->findLocationCoordinates($inputString);
-            $this->name = $inputString;
-            $this->latitude = $gpsCoordinates[0];
-            $this->longitude = $gpsCoordinates[1];
+            $this->findLocation($inputString);
         }
     }
 
@@ -26,28 +22,41 @@ class FindLocation
     private function isGpsFormat(string $inputString) {
         // First - latitude, second - longitude
         $input = explode(" ", $inputString);
-        // *100 tacnost do druge decimale
+
         if( count($input) === 2 && abs(floatval($input[0])*100) <= 9000 && abs(floatval($input[1]) * 100) <= 18000 )
             return true;
         return false;
     }
 
-    // Find geolocation. Google places api
-    private function findLocationCoordinates(string $locationName) {
-       // $apiKey = '';
-        $input = rawurlencode($locationName);
-        $inputType = 'textquery';
-        $fields = 'geometry';
-        $parameters = "input={$input}&inputtype={$inputType}&fields={$fields}&key={$apiKey}";
-        $apiCallUrl = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?{$parameters}";
+
+    /**
+     * API request for location coordinates
+     * Returns array of location candidates
+     */
+    public function findLocation(string $locationName) {
+        $locationsClean = array();
+        $BingMapsKey = 'AmMWG2GT57hxAy8jQhqObLEklhqUgF5kI4WQx3F7Hp93CYELYAoPcXIsz-sL45b4';
+        $locationQuery = rawurlencode($locationName);
+        $maxResults = 10;
+        $includeNeighborhood = 1;
+
+        $apiCallUrl = "http://dev.virtualearth.net/REST/v1/Locations?query={$locationQuery}&includeNeighborhood={$includeNeighborhood}&maxResults={$maxResults}&key={$BingMapsKey}";
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiCallUrl);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         $rawData = curl_exec($ch);
         curl_close($ch);
+        $candidateLocations = json_decode($rawData, true)['resourceSets'][0]['resources'];
+
+        $this->latitude = $candidateLocations[0]['bbox'][0];
+        $this->longitude = $candidateLocations[0]['bbox'][1];
     }
-    
-    // Find name of geolocation
-    private function findLocationName(array $gpsCoordinates) {}
+
+    public function getLatitude() {
+        return $this->latitude;
+    }
+    public function getLongitude() {
+        return $this->longitude;
+    }
 }

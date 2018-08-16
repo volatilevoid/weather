@@ -1,35 +1,20 @@
 <?php
 
-require_once 'app/Location.php';
-require_once 'app/FindLocation.php';
-require_once 'app/WeatherInfo.php';
-require_once 'app/misc.php';
+require_once __DIR__.'/app/Location.php';
+require_once __DIR__.'/app/FindLocation.php';
+require_once __DIR__.'/app/WeatherInfo.php';
+require_once __DIR__.'/app/misc.php';
 
 if(!empty($_GET)) {
-    $dep = explode(' ', $_GET['departure']);
-    $des = explode(' ', $_GET['destination']);
     $departureTime = $_GET['timestamp'];
     
-    $departureName = 'Dvorovi';
-    $destinationName = 'Kandahar';
-    $departureDetails = array($departureName, $dep[0], $dep[1]);
-    $destinationDetails = array($destinationName, $des[0], $des[1]);
-    
-    /**
-     * $departureDetailes  - [location name, latitude, longitude]
-     */
-    $departure = new Location($departureDetails);
-    $destination = new Location($destinationDetails);
+    $departure = new Location(new FindLocation($_GET['departure']));
+    $destination = new Location(new FindLocation($_GET['destination']));
     
     $departureWeather = new WeatherInfo($departure, $departureTime);
     $destinationWeather = new WeatherInfo($destination, $departureTime);
-    
-    $allData = $destinationWeather->getCurrentWeather();
-
-    echo "<pre>";
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,63 +31,63 @@ if(!empty($_GET)) {
     </script>
 </head>
 <body>
-<div class="container">
-    <table style="--sky-color:var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
+<div class="container">        
+    <table style="--sky-color:var(<?php if(!empty($_GET)) echo getSkyColor($departureTime, $departureWeather); ?>)">
         <tr>
             <td colspan="2"><div id="form">
         <form id="locationData" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
-            <input id="departure" type="text" name="departure" value="44.8040 19.2621">
-            <input id="destination" type="text" name="destination" value="44.787197 20.457273"><br>
+            <input id="departure" type="text" name="departure" value="<?php if(!empty($_GET)) echo $_GET['departure']; ?>">
+            <input id="destination" type="text" name="destination" value="<?php if(!empty($_GET)) echo $_GET['destination']; ?>"><br>
             <input type="hidden" id="timestamp" name="timestamp" value="">
             <input id="button" type="submit" value="submit">
         </form>
     </div></td>
         </tr>
-        <?php if (!empty($des) && !empty($dep)): ?>
+        <?php if(!empty($_GET)): ?>
         <tr>
-            <td>High clouds: <?php echo $departureWeather->getHighClouds(); ?>
+            <td>High clouds: <?php echo $departureWeather->getHighClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
             <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
-            <td>High clouds: <?php echo $destinationWeather->getHighClouds(); ?>
+            <td>High clouds: <?php echo $destinationWeather->getHighClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
             <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getHighClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
-            <td>Medium clouds: <?php echo $departureWeather->getMediumClouds(); ?>
+            <td>Medium clouds: <?php echo $departureWeather->getMediumClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getMediumClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
-            <td>Medium clouds: <?php echo $destinationWeather->getMediumClouds(); ?>
+            <td>Medium clouds: <?php echo $destinationWeather->getMediumClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getMediumClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
-            <td>Low clouds: <?php echo $departureWeather->getLowClouds(); ?>
+            <td>Low clouds: <?php echo $departureWeather->getLowClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather)?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getLowClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
-            <td>Low clouds: <?php echo $destinationWeather->getLowClouds(); ?>
+            <td>Low clouds: <?php echo $destinationWeather->getLowClouds(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getLowClouds(), $departureTime); ?>)"></div>
             </div>
             </td>
         </tr>
         <tr>
-            <td>Fog: <?php echo $departureWeather->getFog(); ?>
+            <td>Fog: <?php echo $departureWeather->getFog(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $departureWeather); ?>)">
                 <div class="sun" style="--sun-color: var(<?php echo getSunColor($departureTime, $departureWeather); ?>)"></div>
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($departureWeather->getCloudiness(), $departureTime); ?>)"></div>
             </div>
             </td>
-            <td>Fog:<?php echo $destinationWeather->getFog(); ?>
+            <td>Fog:<?php echo $destinationWeather->getFog(); ?>&percnt;
             <div class="sky" style="--sky-color: var(<?php echo getSkyColor($departureTime, $destinationWeather); ?>)">
                 <div class="sun" style="--sun-color: var(<?php echo getSunColor($departureTime, $destinationWeather); ?>)"></div>
                 <div class="elipse with-circle with-bump" style="--cloud-color: var(<?php echo getCloudColor($destinationWeather->getCloudiness(), $departureTime); ?>)"></div>
@@ -112,42 +97,26 @@ if(!empty($_GET)) {
         <tr>
             <td>
             <div>
-                Departure details:
+                Destination weather:
                 <ul>
-                <li>Name: <?php echo $departureWeather->getName()?></li>
-                <li>Latitude: <?php echo $departureWeather->getCoordinates()['latitude']?></li>
-                <li>Longitude: <?php echo $departureWeather->getCoordinates()['longitude']?></li>
-                </ul>
-            </div>
-            <div>
-                Departure weather:
-                <ul>
-                <li>Dew Point: <?php echo $departureWeather->getDewPoint()?></li>
-                <li>Temperature: <?php echo $departureWeather->getTemperature()?></li>
-                <li>Humidity: <?php echo $departureWeather->getHumidity()?></li>
+                <li>Dew Point: <?php echo $departureWeather->getDewPoint()?>&deg;</li>
+                <li>Temperature: <?php echo $departureWeather->getTemperature()?>&#8451;</li>
+                <li>Humidity: <?php echo $departureWeather->getHumidity()?>&percnt;</li>
                 </ul>
             </div>
             </td>
             <td>
             <div>
-                Destination details:
-                <ul>
-                <li>Name: <?php echo $destinationWeather->getName()?></li>
-                <li>Latitude: <?php echo $destinationWeather->getCoordinates()['latitude']?></li>
-                <li>Longitude: <?php echo $destinationWeather->getCoordinates()['longitude']?></li>
-                </ul>
-            </div>
-            <div>
                 Destination weather:
                 <ul>
-                <li>Dew Point: <?php echo $destinationWeather->getDewPoint()?></li>
-                <li>Temperature: <?php echo $destinationWeather->getTemperature()?></li>
-                <li>Humidity:<?php echo $destinationWeather->getHumidity()?></li>
+                <li>Dew Point: <?php echo $destinationWeather->getDewPoint()?>&deg;</li>
+                <li>Temperature: <?php echo $destinationWeather->getTemperature()?>&#8451;</li>
+                <li>Humidity:<?php echo $destinationWeather->getHumidity()?>&percnt;</li>
                 </ul>
             </div>
             </td>
         </tr>
-<?php endif; ?>
+        <?php endif; ?>
     </table>
 </div>
 </body>

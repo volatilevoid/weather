@@ -1,6 +1,8 @@
 :root {
     --sky-day: rgb(135, 206, 235);
     --sky-night: rgb(46,68,130);
+    --sky-fog: #DCDBDF;
+    --sun-fog: rgb(203, 212, 116);
     --no-sun-night: rgb(46,68,130);
     --sun-day: yellow;
     --no-sun-day: skyblue;
